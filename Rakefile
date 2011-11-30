@@ -2,7 +2,6 @@ require 'rubygems' unless ENV['NO_RUBYGEMS']
 require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'date'
-require 'spec/rake/spectask'
 
 GEM = "rbing"
 GEM_VERSION = "1.1.0"
@@ -37,7 +36,7 @@ task :default => :spec
 
 desc "Run specs"
 Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.spec_files = FileList['spec/*_spec.rb']
   t.spec_opts = %w(-fs --color)
 end
 
