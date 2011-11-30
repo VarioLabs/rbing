@@ -1,5 +1,9 @@
 require 'rubygems' unless ENV['NO_RUBYGEMS']
-require 'rake/gempackagetask'
+require 'bundler'
+Bundler.setup
+Bundler.require
+require "rspec/core/rake_task"
+require 'rubygems/package_task'
 require 'rubygems/specification'
 require 'date'
 
@@ -35,13 +39,13 @@ end
 task :default => :spec
 
 desc "Run specs"
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/*_spec.rb']
-  t.spec_opts = %w(-fs --color)
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = 'spec/*_spec.rb'
+  t.rspec_opts = %w(-fs --color --backtrace)
 end
 
 
-Rake::GemPackageTask.new(spec) do |pkg|
+Gem::PackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
 
